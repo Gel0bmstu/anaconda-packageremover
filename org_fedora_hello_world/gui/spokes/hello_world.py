@@ -100,6 +100,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
         """
         NormalSpoke.__init__(self, data, storage, payload)
 
+        self._remove_count = 0
         self._hello_world_module = HELLO_WORLD.get_proxy()
 
     def initialize(self):
@@ -139,6 +140,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
             if check.get_active():
                 pkgs_to_remove.append(pkg_name.get_text())
 
+        self._remove_count = len(pkgs_to_remove)
         self._hello_world_module.SetLines(pkgs_to_remove)
 
     def execute(self):
@@ -228,17 +230,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
 
         :rtype: str
         """
-
-        return _('Select packages to remove on installed system')
-
-    # def _grid_click_handler(self, row, mock):
-    #     grid_list = row.get_children()
-    #     check = grid_list[0]
-
-    #     with open('/tmp/checkbox.log', 'w') as f: 
-    #         if check.get_active():
-    #             f.write('Checkbox setted to False')
-    #             check.set_active(False)
-    #         else:
-    #             f.write('Checkbox setted to True')
-    #             check.set_active(True)
+        if self._remove_count == 0:
+            return _('Select packages, that would be removed in installed system')
+        else:
+            return _('You selected {} packages'.format(self._remove_count))
