@@ -21,7 +21,7 @@ _default:
 	@cd $(TMPDIR) ; find . | cpio -c -o --quiet | gzip -9 > $(OUTDIR)/updates.img
 	@rm -rf $(TMPDIR)
 	@echo " done."
-	scp updates.img gel0@35.228.159.44:/home/gel0/
+	@cp -u $(OUTDIR)/updates.img ~/
 	@echo "Success!"
 
 .PHONY: check

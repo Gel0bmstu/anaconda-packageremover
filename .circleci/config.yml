@@ -8,13 +8,12 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            cc:e1:94:b8:cc:87:33:76:76:f8:60:65:1f:60:21:7f
+            01:15:67:1b:74:2a:49:98:aa:ab:93:3f:3e:81:7a:1b
       - run:
           name: Build image
           command: |
             ssh gel0@35.228.159.44 "cd ~/anaconda_pkgs_to_remove_addon; git pull"
             ssh gel0@35.228.159.44 "cd ~/anaconda_pkgs_to_remove_addon; make"
-            ssh gel0@35.228.159.44 "cd ~/anaconda_pkgs_to_remove_addon; cp -u updates.img ~/"
 workflows:
   version: 2
   workflow:
