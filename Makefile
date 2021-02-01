@@ -21,7 +21,7 @@ _default:
 	@cd $(TMPDIR) ; find . | cpio -c -o --quiet | gzip -9 > $(OUTDIR)/updates.img
 	@rm -rf $(TMPDIR)
 	@echo " done."
-	@cp -u $(OUTDIR)/updates.img ~/
+	@cp -u $(OUTDIR)/updates.img ~/addon
 	@echo "Success!"
 
 .PHONY: check
