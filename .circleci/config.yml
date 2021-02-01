@@ -8,7 +8,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            82:f8:79:47:52:1e:6e:61:c7:04:a2:79:6c:c1:21:0f
+            cc:e1:94:b8:cc:87:33:76:76:f8:60:65:1f:60:21:7f
       - run:
           name: Build image
           command: |
