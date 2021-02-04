@@ -8,8 +8,7 @@ CONFDIR := $(BASEDIR)/dbus/confs/
 
 PYTHON?=python3
 
-
-_default:
+build:
 	@echo "*** Building updates image ***"
 	@echo -n "Working..."
 	@mkdir -p $(ADDONDIR)
@@ -20,9 +19,17 @@ _default:
 	@cp -pa data/org.fedoraproject.Anaconda.Addons.*.conf $(CONFDIR)
 	@cd $(TMPDIR) ; find . | cpio -c -o --quiet | gzip -9 > $(OUTDIR)/updates.img
 	@rm -rf $(TMPDIR)
-	@echo " done."
+	@echo "building done."
+
+_default:
+	$(build)
 	@cp -u $(OUTDIR)/updates.img ~/addon
 	@echo "Success!"
+
+.PHONY: debug
+debug:
+	$(build)
+	scp updates.img gel0@35.228.159.44:/home/gel0/addon
 
 .PHONY: check
 check:

@@ -18,4 +18,4 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - buid
+      - buidq

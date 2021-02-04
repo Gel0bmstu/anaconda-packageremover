@@ -34,4 +34,4 @@ class HelloWorldCategory(SpokeCategory):
     Spokes reference a class of the category they should be included in.
     """
 
-    title = N_("HELLO WORLD")
+    title = N_("PACKAGE REMOVE")
