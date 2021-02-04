@@ -83,7 +83,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
     icon = "face-cool-symbolic"
 
     # title of the spoke (will be displayed on the hub)
-    title = N_("_Packet Chose")
+    title = N_("_Package to remove")
 
     ### methods defined by API ###
     def __init__(self, data, storage, payload):

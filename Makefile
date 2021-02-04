@@ -21,14 +21,12 @@ build:
 	@rm -rf $(TMPDIR)
 	@echo "building done."
 
-_default:
-	$(build)
+_default: build
 	@cp -u $(OUTDIR)/updates.img ~/addon
 	@echo "Success!"
 
 .PHONY: debug
-debug:
-	$(build)
+debug: build
 	scp updates.img gel0@35.228.159.44:/home/gel0/addon
 
 .PHONY: check
