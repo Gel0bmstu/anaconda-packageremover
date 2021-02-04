@@ -8,7 +8,7 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-execute</property>
   </object>
-  <object class="AnacondaSpokeWindow" id="helloWorldSpokeWindow">
+  <object class="AnacondaSpokeWindow" id="packageRemoveSpokeWindow">
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>

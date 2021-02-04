@@ -1,11 +1,11 @@
-Hello World addon
+Package Remove addon
 =================
 
-The "hello world" Anaconda addon is a minimalistic example of an addon. The code does not distract
+The "package remove" Anaconda addon is a minimalistic example of an addon. The code does not distract
 addon developers from the vital parts of addon design. At the same time, it demonstrates Anaconda's
 API and functionality provided for addons.
 
-The actual functionality provided by the addon is creating a file ``/root/hello_world.txt`` with
+The actual functionality provided by the addon is creating a file ``/root/package_remove.txt`` with
 custom contents on the installed system. Users can provide text for the file in GUI and Kickstart.
 Besides adding the text, order of the lines can be reversed.
 
@@ -36,7 +36,7 @@ of Anaconda's code. ::
     ├── LICENSE
     ├── Makefile
     ├── README.rst
-    └── org_fedora_hello_world  <2>
+    └── org_fedora_package_remove  <2>
         ├── constants.py        <3>
         ├── service             <4>
         ├── categories          <5>
@@ -53,8 +53,8 @@ The directories and files seen here are:
 6. Code for graphical interface
 7. Code for text interface
 
-In most cases, you can assume that ``HelloWorld``, ``hello_world`` and other variations of
-"hello world" are specific to this addon and will need changing for your own addon.
+In most cases, you can assume that ``PackageRemove``, ``package_remove`` and other variations of
+"package remove" are specific to this addon and will need changing for your own addon.
 
 Service files
 -------------
@@ -62,10 +62,10 @@ Service files
 The files in the ``data`` directory are needed to configure and run the D-Bus service in the
 installation environment. These are:
 
-``org.fedoraproject.Anaconda.Addons.HelloWorld.conf``
+``org.fedoraproject.Anaconda.Addons.PackageRemove.conf``
     Configuration for D-Bus that describes the objects on the bus and access rights to these.
 
-``org.fedoraproject.Anaconda.Addons.HelloWorld.service``
+``org.fedoraproject.Anaconda.Addons.PackageRemove.service``
     A D-Bus service file that describes the D-Bus service to be started. Note that even though
     these files have the same ``.service`` extension as ``systemd`` unit files and use a similar
     format, they are different and are not parsed by ``systemd`` but rather the D-Bus daemon.
@@ -97,13 +97,13 @@ Addon code directory
 
 All Python code of the addon should be placed in an ``<addon_name>`` directory. Anaconda addons
 generally use for this directory a naming scheme that concatenates hierarchically nested
-identifiers into an URL-like string. You can read ``org_fedora_hello_world`` as the three
-components: ``org``, ``fedora``, and ``hello_world``. You should create your own namespace for
+identifiers into an URL-like string. You can read ``org_fedora_package_remove`` as the three
+components: ``org``, ``fedora``, and ``package_remove``. You should create your own namespace for
 your addon, eg. ``com_example_widgets``.
 
 In the Python code, the name of this directory corresponds to where your modules are located:
 
->>> from org_fedora_hello_world.foo.bar import baz
+>>> from org_fedora_package_remove.foo.bar import baz
 
 In this example addon, this directory contains a single file:
 
@@ -128,10 +128,10 @@ The files found here are:
     Implements classes needed to handle Kickstart data:
     Parse Kickstart text into internal data structures, and vice versa.
 
-``hello_world.py``
+``package_remove.py``
     Implements the class that represents the D-Bus service. Binds together the whole service.
 
-``hello_world_interface.py``
+``package_remove_interface.py``
     Implements an interface for the D-Bus service class.
     Thanks to the ``dasbus`` library, this then automatically becomes the actual D-Bus interface.
 
@@ -151,36 +151,36 @@ Interface code
 The code for the addon's user interfaces (integrated into Anaconda's user interfaces) follows
 a rigid structure: ::
 
-    org_fedora_hello_world/
+    org_fedora_package_remove/
     ├── categories
-    │   └── hello_world.py
+    │   └── package_remove.py
     ├── gui
     │   └── spokes
-    │       ├── hello_world.glade
-    │       └── hello_world.py
+    │       ├── package_remove.glade
+    │       └── package_remove.py
     └── tui
         └── spokes
-            └── hello_world.py
+            └── package_remove.py
 
 The files are the following:
 
-``categories/hello_world.py``
+``categories/package_remove.py``
     Provides "category" classes added by the addon, if needed. A category is a group of spokes
     (screens). In GUI, a category is visualized as a heading; the icons and text to enter spokes
     are grouped under these heading.
 
-    The Hello World addon creates its own category to demonstrate this, and thus contains this file.
+    The Package Remove addon creates its own category to demonstrate this, and thus contains this file.
     Other addons may not need this.
 
     The name of this file is arbitrary, but it's a good practice to name it after your addon.
 
-``gui/spokes/hello_world.py``
+``gui/spokes/package_remove.py``
     Provides a class that implements the GUI variant of the spoke (screen).
     This class handles converting internal data to GUI controls and back.
 
     The name of this file is arbitrary. You can have multiple spokes in one file, too.
 
-``gui/spokes/hello_world.glade``
+``gui/spokes/package_remove.glade``
     Provides a definition of the GUI structure.
     Create this with the Glade application supplied with GNOME.
 
@@ -189,7 +189,7 @@ The files are the following:
     arbitrary: One glade file can contain multiple screens, and the code for each spoke can specify
     which screen it uses.
 
-``tui/spokes/hello_world.py``
+``tui/spokes/package_remove.py``
     Provides a class that implements the TUI variant of the spoke.
     The same considerations as for the GUI variant apply.
 

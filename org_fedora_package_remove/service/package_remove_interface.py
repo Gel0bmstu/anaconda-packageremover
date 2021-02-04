@@ -23,14 +23,14 @@ from dasbus.typing import *  # pylint: disable=wildcard-import,unused-wildcard-i
 
 from pyanaconda.modules.common.base import KickstartModuleInterface
 
-from org_fedora_hello_world.constants import HELLO_WORLD
-# from org_fedora_hello_world.service.hello_world import PkgsList
+from org_fedora_package_remove.constants import PACKAGE_REMOVE
+# from org_fedora_package_remove.service.package_remove import PkgsList
 
 log = logging.getLogger(__name__)
 
-@dbus_interface(HELLO_WORLD.interface_name)
-class HelloWorldInterface(KickstartModuleInterface):
-    """The interface for HelloWorld.
+@dbus_interface(PACKAGE_REMOVE.interface_name)
+class PackageRemoveInterface(KickstartModuleInterface):
+    """The interface for PackageRemove.
 
     The interface class is needed for interfacing code running within
     Anaconda's main process and code running in the D-Bus service process. The
@@ -44,7 +44,7 @@ class HelloWorldInterface(KickstartModuleInterface):
 
     @property
     def Lines(self) -> List[Str]:
-        """Lines of the hello world file."""
+        """Lines of the package remove file."""
         return self.implementation.list
 
     @emits_properties_changed

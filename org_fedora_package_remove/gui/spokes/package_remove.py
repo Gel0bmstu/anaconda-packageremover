@@ -18,7 +18,7 @@
 # Red Hat Author(s): Vratislav Podzimek <vpodzime@redhat.com>
 #
 
-"""Module with the HelloWorldSpoke class."""
+"""Module with the PackageRemoveSpoke class."""
 
 import logging
 
@@ -31,26 +31,26 @@ from pyanaconda.ui.gui import GUIObject
 from pyanaconda.ui.gui.spokes import NormalSpoke
 from pyanaconda.ui.common import FirstbootSpokeMixIn
 
-# the path to addons is in sys.path so we can import things from org_fedora_hello_world
-from org_fedora_hello_world.categories.hello_world import HelloWorldCategory
-from org_fedora_hello_world.constants import HELLO_WORLD, PACKAGES_LIST_FILE_PATH, REMOVABLE_PACKAGES_FILE_PATH
+# the path to addons is in sys.path so we can import things from org_fedora_package_remove
+from org_fedora_package_remove.categories.package_remove import PackageRemoveCategory
+from org_fedora_package_remove.constants import PACKAGE_REMOVE, PACKAGES_LIST_FILE_PATH, REMOVABLE_PACKAGES_FILE_PATH
 
 log = logging.getLogger(__name__)
 
 # export only the spoke, no helper functions, classes or constants
-__all__ = ["HelloWorldSpoke"]
+__all__ = ["PackageRemoveSpoke"]
 
 # import gettext
-# _ = lambda x: gettext.ldgettext("hello-world-anaconda-plugin", x)
+# _ = lambda x: gettext.ldgettext("package-remove-anaconda-plugin", x)
 
 # will never be translated
 _ = lambda x: x
 N_ = lambda x: x
 
 
-class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
+class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
     """
-    Class for the Hello world spoke. This spoke will be in the Hello world
+    Class for the Package remove spoke. This spoke will be in the Package remove
     category and thus on the Summary hub. It is a very simple example of a unit
     for the Anaconda's graphical user interface. Since it is also inherited form
     the FirstbootSpokeMixIn, it will also appear in the Initial Setup (successor
@@ -67,20 +67,20 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
 
     # list all top-level objects from the .glade file that should be exposed
     # to the spoke or leave empty to extract everything
-    builderObjects = ["helloWorldSpokeWindow", "buttonImage"]
+    builderObjects = ["packageRemoveSpokeWindow", "buttonImage"]
 
     # the name of the main window widget
-    mainWidgetName = "helloWorldSpokeWindow"
+    mainWidgetName = "packageRemoveSpokeWindow"
 
     # name of the .glade file in the same directory as this source
-    uiFile = "hello_world.glade"
+    uiFile = "package_remove.glade"
 
     # category this spoke belongs to
-    category = HelloWorldCategory
+    category = PackageRemoveCategory
 
     # spoke icon (will be displayed on the hub)
     # preferred are the -symbolic icons as these are used in Anaconda's spokes
-    icon = "face-cool-symbolic"
+    icon = "view-list-symbolic"
 
     # title of the spoke (will be displayed on the hub)
     title = N_("_Package to remove")
@@ -101,7 +101,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
         NormalSpoke.__init__(self, data, storage, payload)
 
         self._remove_count = 0
-        self._hello_world_module = HELLO_WORLD.get_proxy()
+        self._package_remove_module = PACKAGE_REMOVE.get_proxy()
 
     def initialize(self):
         """
@@ -122,7 +122,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
 
         :see: pyanaconda.ui.common.UIObject.refresh
         """
-        self._print_packages(self._hello_world_module.Lines)
+        self._print_packages(self._package_remove_module.Lines)
 
     def apply(self):
         """
@@ -141,7 +141,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalSpoke):
                 pkgs_to_remove.append(pkg_name.get_text())
 
         self._remove_count = len(pkgs_to_remove)
-        self._hello_world_module.SetLines(pkgs_to_remove)
+        self._package_remove_module.SetLines(pkgs_to_remove)
 
     def execute(self):
         """

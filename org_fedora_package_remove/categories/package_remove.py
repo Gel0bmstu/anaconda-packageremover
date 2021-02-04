@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020 Red Hat, Inc.
+# Copyright (C) 2013  Red Hat, Inc.
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of
@@ -15,15 +15,23 @@
 # License and may only be used or replicated with the express permission of
 # Red Hat, Inc.
 #
+# Red Hat Author(s): Vratislav Podzimek <vpodzime@redhat.com>
+#
+"""Package remove category module"""
 
-"""The __main__.py file of a service is what runs as the service. See also the files:
-data/*.service
-"""
+from pyanaconda.ui.categories import SpokeCategory
 
-from pyanaconda.modules.common import init
-init()  # must be called before importing the service code
+__all__ = ["PackageRemoveCategory"]
 
-# pylint:disable=wrong-import-position
-from org_fedora_hello_world.service.hello_world import HelloWorld
-service = HelloWorld()
-service.run()
+N_ = lambda x: x
+
+
+class PackageRemoveCategory(SpokeCategory):
+    """The Package remove category.
+
+    Class for the Package remove category. Category groups related spokes
+    together. Both logically and visually (creates a box on a hub).
+    Spokes reference a class of the category they should be included in.
+    """
+
+    title = N_("PACKAGE REMOVE")

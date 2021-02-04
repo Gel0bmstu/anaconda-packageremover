@@ -24,10 +24,10 @@ from pyanaconda.modules.common.constants.namespaces import ADDONS_NAMESPACE
 
 # These define location of the addon's service on D-Bus. See also the data/*.conf file.
 
-HELLO_WORLD_NAMESPACE = (*ADDONS_NAMESPACE, "HelloWorld")
+PACKAGE_REMOVE_NAMESPACE = (*ADDONS_NAMESPACE, "PackageRemove")
 
-HELLO_WORLD = DBusServiceIdentifier(
-    namespace=HELLO_WORLD_NAMESPACE,
+PACKAGE_REMOVE = DBusServiceIdentifier(
+    namespace=PACKAGE_REMOVE_NAMESPACE,
     message_bus=DBus
 )
 

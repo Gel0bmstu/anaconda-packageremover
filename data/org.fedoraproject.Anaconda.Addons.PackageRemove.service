@@ -1,0 +1,6 @@
+[D-BUS Service]
+# Start the org.fedoraproject.Anaconda.Addons.PackageRemove service.
+# Runs org_fedora_package_remove/service/__main__.py
+Name=org.fedoraproject.Anaconda.Addons.PackageRemove
+Exec=/usr/libexec/anaconda/start-module org_fedora_package_remove.service
+User=root

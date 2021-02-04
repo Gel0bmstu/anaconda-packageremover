@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013  Red Hat, Inc.
+# Copyright (C) 2020 Red Hat, Inc.
 #
 # This copyrighted material is made available to anyone wishing to use,
 # modify, copy, or redistribute it subject to the terms and conditions of
@@ -15,23 +15,15 @@
 # License and may only be used or replicated with the express permission of
 # Red Hat, Inc.
 #
-# Red Hat Author(s): Vratislav Podzimek <vpodzime@redhat.com>
-#
-"""Hello world category module"""
 
-from pyanaconda.ui.categories import SpokeCategory
+"""The __main__.py file of a service is what runs as the service. See also the files:
+data/*.service
+"""
 
-__all__ = ["HelloWorldCategory"]
+from pyanaconda.modules.common import init
+init()  # must be called before importing the service code
 
-N_ = lambda x: x
-
-
-class HelloWorldCategory(SpokeCategory):
-    """The Hello Word category.
-
-    Class for the Hello world category. Category groups related spokes
-    together. Both logically and visually (creates a box on a hub).
-    Spokes reference a class of the category they should be included in.
-    """
-
-    title = N_("PACKAGE REMOVE")
+# pylint:disable=wrong-import-position
+from org_fedora_package_remove.service.package_remove import PackageRemove
+service = PackageRemove()
+service.run()

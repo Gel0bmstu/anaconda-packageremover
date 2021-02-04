@@ -25,7 +25,7 @@
 #
 
 
-"""Module with the class for the Hello world TUI spoke."""
+"""Module with the class for the Package remove TUI spoke."""
 
 import logging
 import re
@@ -39,26 +39,26 @@ from pyanaconda.ui.common import FirstbootSpokeMixIn
 # Simpleline's dialog configured for use in Anaconda
 from pyanaconda.ui.tui.tuiobject import Dialog, PasswordDialog
 
-# the path to addons is in sys.path so we can import things from org_fedora_hello_world
-from org_fedora_hello_world.categories.hello_world import HelloWorldCategory
-from org_fedora_hello_world.constants import HELLO_WORLD
+# the path to addons is in sys.path so we can import things from org_fedora_package_remove
+from org_fedora_package_remove.categories.package_remove import PackageRemoveCategory
+from org_fedora_package_remove.constants import PACKAGE_REMOVE
 
 log = logging.getLogger(__name__)
 
-# export only the HelloWorldSpoke and HelloWorldEditSpoke classes
-__all__ = ["HelloWorldSpoke"]
+# export only the PackageRemoveSpoke and PackageRemoveEditSpoke classes
+__all__ = ["PackageRemoveSpoke"]
 
 # import gettext
-# _ = lambda x: gettext.ldgettext("hello-world-anaconda-plugin", x)
+# _ = lambda x: gettext.ldgettext("package-remove-anaconda-plugin", x)
 
 # will never be translated
 _ = lambda x: x
 N_ = lambda x: x
 
 
-class HelloWorldSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
+class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
     """
-    Class for the Hello world TUI spoke that is a subclass of NormalTUISpoke. It
+    Class for the Package remove TUI spoke that is a subclass of NormalTUISpoke. It
     is a simple example of the basic unit for Anaconda's text user interface.
     Since it is also inherited form the FirstbootSpokeMixIn, it will also appear
     in the Initial Setup (successor of the Firstboot tool).
@@ -71,7 +71,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
     ### class attributes defined by API ###
 
     # category this spoke belongs to
-    category = HelloWorldCategory
+    category = PackageRemoveCategory
 
     def __init__(self, data, storage, payload):
         """
@@ -88,7 +88,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         NormalTUISpoke.__init__(self, data, storage, payload)
         self.title = N_("Package to remove")
 
-        self._hello_world_module = HELLO_WORLD.get_proxy()
+        self._package_remove_module = PACKAGE_REMOVE.get_proxy()
 
         self._remove = []
         self._list = []
@@ -118,7 +118,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         # call parent method to setup basic container with screen title set
         super().refresh(args)
 
-        pkgs_list = self._hello_world_module.Lines
+        pkgs_list = self._package_remove_module.Lines
 
         self._container = ListColumnContainer(columns=3)
         self.window.add(self._container)
@@ -134,7 +134,7 @@ class HelloWorldSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         The apply method that is called when the spoke is left. It should
         update the contents of self.data with values set in the spoke.
         """
-        self._hello_world_module.SetLines(self._remove)
+        self._package_remove_module.SetLines(self._remove)
 
     def execute(self):
         """

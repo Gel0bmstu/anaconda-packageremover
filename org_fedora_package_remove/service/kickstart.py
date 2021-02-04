@@ -28,8 +28,8 @@ from pyanaconda.core.kickstart.addon import AddonData
 log = logging.getLogger(__name__)
 
 
-class HelloWorldData(AddonData):
-    """The kickstart data for the Hello World addon."""
+class PackageRemoveData(AddonData):
+    """The kickstart data for the Package Remove addon."""
 
     def __init__(self):
         super().__init__()
@@ -44,7 +44,7 @@ class HelloWorldData(AddonData):
         args is a list of all the arguments following the addon ID. For
         example, for the line:
 
-            %addon org_fedora_hello_world --reverse --arg2="example"
+            %addon org_fedora_package_remove --reverse --arg2="example"
 
         handle_header will be called with args=['--reverse', '--arg2="example"']
 
@@ -55,9 +55,9 @@ class HelloWorldData(AddonData):
         """
         # Create the argument parser.
         op = KSOptionParser(
-            prog="%addon org_fedora_hello_world",
+            prog="%addon org_fedora_package_remove",
             version=VERSION,
-            description="Configure the Hello World Addon."
+            description="Configure the Package Remove Addon."
         )
 
         op.add_argument(
@@ -81,12 +81,12 @@ class HelloWorldData(AddonData):
 
         For example, this kickstart...
 
-        %addon org_fedora_hello_world
-        Hello world!
+        %addon org_fedora_package_remove
+        Package remove!
         foo bar baz
         %end
 
-        ...will result in two calls to handle_line, once with "Hello world!"
+        ...will result in two calls to handle_line, once with "Package remove!"
         and another time with "foo bar baz".
 
         :param line: a single line from the %addon section
@@ -101,7 +101,7 @@ class HelloWorldData(AddonData):
         """What should end up in the resulting kickstart file, i.e. the %addon
         section containing string representation of the stored data.
         """
-        section = "\n%addon org_fedora_hello_world"
+        section = "\n%addon org_fedora_package_remove"
 
         if self.reverse:
             section += " --reverse"
@@ -118,10 +118,10 @@ class HelloWorldData(AddonData):
         return section
 
 
-class HelloWorldKickstartSpecification(KickstartSpecification):
+class PackageRemoveKickstartSpecification(KickstartSpecification):
 
     version = VERSION
 
     addons = {
-        "org_fedora_hello_world": HelloWorldData
+        "org_fedora_package_remove": PackageRemoveData
     }

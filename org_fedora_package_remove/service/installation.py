@@ -41,20 +41,20 @@ from os.path import normpath, join as joinpath
 
 from pyanaconda.modules.common.task import Task
 
-from org_fedora_hello_world.constants import REMOVABLE_PACKAGES_FILE_PATH
+from org_fedora_package_remove.constants import REMOVABLE_PACKAGES_FILE_PATH
 
 log = logging.getLogger(__name__)
 
 
-class HelloWorldConfigurationTask(Task):
-    """The HelloWorld configuration task.
+class PackageRemoveConfigurationTask(Task):
+    """The PackageRemove configuration task.
 
     This task runs before the installation starts.
     """
 
     @property
     def name(self):
-        return "Configure HelloWorld"
+        return "Configure PackageRemove"
 
     def run(self):
         """The run method performs the actual work.
@@ -64,8 +64,8 @@ class HelloWorldConfigurationTask(Task):
         log.info("Running configuration task.")
 
 
-class HelloWorldInstallationTask(Task):
-    """The HelloWorld installation task.
+class PackageRemoveInstallationTask(Task):
+    """The PackageRemove installation task.
 
     This task runs at end of installation.
     """
@@ -82,9 +82,9 @@ class HelloWorldInstallationTask(Task):
     def run(self):
         """The run method performs the actual work."""
         log.info("Running installation task.")
-        hello_file_path = normpath(joinpath(self._sysroot, REMOVABLE_PACKAGES_FILE_PATH))
-        log.debug("Writing removable pkgs to: %s", hello_file_path)
+        package_remove_file_path = normpath(joinpath(self._sysroot, REMOVABLE_PACKAGES_FILE_PATH))
+        log.debug("Writing removable pkgs to: %s", package_remove_file_path)
 
-        with open(hello_file_path, "w") as f:
+        with open(package_remove_file_path, "w") as f:
             for pkg in self._pkgs:
                 f.write(pkg)

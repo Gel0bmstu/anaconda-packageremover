@@ -12,7 +12,7 @@ build:
 	@echo "*** Building updates image ***"
 	@echo -n "Working..."
 	@mkdir -p $(ADDONDIR)
-	@cp -par org_fedora_hello_world $(ADDONDIR)
+	@cp -par org_fedora_package_remove $(ADDONDIR)
 	@mkdir -p $(SERVICESDIR)
 	@cp -pa data/org.fedoraproject.Anaconda.Addons.*.service $(SERVICESDIR)
 	@mkdir -p $(CONFDIR)
@@ -32,6 +32,6 @@ debug: build
 .PHONY: check
 check:
 	@echo "*** Running pylint ***"
-	$(PYTHON) -m pylint org_fedora_hello_world/
+	$(PYTHON) -m pylint org_fedora_package_remove/
 # Using git clone of Anaconda will give you import errors. In such case, run the check this way:
 # PYTHONPATH=/my/anaconda/git/clone make check

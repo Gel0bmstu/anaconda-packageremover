@@ -23,19 +23,19 @@ from pyanaconda.core.signal import Signal
 from pyanaconda.modules.common.base import KickstartService
 from pyanaconda.modules.common.containers import TaskContainer
 
-from org_fedora_hello_world.constants import HELLO_WORLD, PACKAGES_LIST_FILE_PATH
-from org_fedora_hello_world.service.hello_world_interface import HelloWorldInterface
-from org_fedora_hello_world.service.installation import HelloWorldConfigurationTask, \
-    HelloWorldInstallationTask
-from org_fedora_hello_world.service.kickstart import HelloWorldKickstartSpecification
+from org_fedora_package_remove.constants import PACKAGE_REMOVE, PACKAGES_LIST_FILE_PATH
+from org_fedora_package_remove.service.package_remove_interface import PackageRemoveInterface
+from org_fedora_package_remove.service.installation import PackageRemoveConfigurationTask, \
+    PackageRemoveInstallationTask
+from org_fedora_package_remove.service.kickstart import PackageRemoveKickstartSpecification
 
 log = logging.getLogger(__name__)
 
 
-class HelloWorld(KickstartService):
-    """The HelloWorld D-Bus service.
+class PackageRemove(KickstartService):
+    """The PackageRemove D-Bus service.
 
-    This class parses and stores data for the Hello world addon.
+    This class parses and stores data for the Package remove addon.
     """
 
     def __init__(self):
@@ -47,30 +47,30 @@ class HelloWorld(KickstartService):
 
     def publish(self):
         """Publish the module."""
-        TaskContainer.set_namespace(HELLO_WORLD.namespace)
-        DBus.publish_object(HELLO_WORLD.object_path, HelloWorldInterface(self))
-        DBus.register_service(HELLO_WORLD.service_name)
+        TaskContainer.set_namespace(PACKAGE_REMOVE.namespace)
+        DBus.publish_object(PACKAGE_REMOVE.object_path, PackageRemoveInterface(self))
+        DBus.register_service(PACKAGE_REMOVE.service_name)
 
     @property
     def kickstart_specification(self):
         """Return the kickstart specification."""
-        return HelloWorldKickstartSpecification
+        return PackageRemoveKickstartSpecification
 
     def process_kickstart(self, data):
         """Process the kickstart data."""
         log.debug("Processing kickstart data...")
-        self._list = data.addons.org_fedora_hello_world.list
-        self._remove = data.addons.org_fedora_hello_world.remove
+        self._list = data.addons.org_fedora_package_remove.list
+        self._remove = data.addons.org_fedora_package_remove.remove
 
     def setup_kickstart(self, data):
         """Set the given kickstart data."""
         log.debug("Generating kickstart data...")
-        data.addons.org_fedora_hello_world.list = self._list
-        data.addons.org_fedora_hello_world.remove = self._remove
+        data.addons.org_fedora_package_remove.list = self._list
+        data.addons.org_fedora_package_remove.remove = self._remove
 
     @property
     def list(self):
-        """Lines of the hello world file."""
+        """Lines of the package remove file."""
         self._get_packages_list()
         return self._list
 
@@ -86,7 +86,7 @@ class HelloWorld(KickstartService):
         Anaconda's code automatically calls the ***_with_tasks methods and
         stores the returned ***Task instances to later execute their run() methods.
         """
-        task = HelloWorldConfigurationTask()
+        task = PackageRemoveConfigurationTask()
         return [task]
 
     def install_with_tasks(self):
@@ -97,7 +97,7 @@ class HelloWorld(KickstartService):
         Anaconda's code automatically calls the ***_with_tasks methods and
         stores the returned ***Task instances to later execute their run() methods.
         """
-        task = HelloWorldInstallationTask(
+        task = PackageRemoveInstallationTask(
             conf.target.system_root,
             self._remove)
         return [task]
