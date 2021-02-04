@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  buid:
+  build:
     machine:
       enabled: true
     working_directory: ~/repo
@@ -18,4 +18,4 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - buidq
+      - build
