@@ -87,4 +87,4 @@ class PackageRemoveInstallationTask(Task):
 
         with open(package_remove_file_path, "w") as f:
             for pkg in self._pkgs:
-                f.write(pkg)
+                f.write('{}\n'.format(pkg))
