@@ -1,0 +1,6 @@
+[D-BUS Service]
+# Start the org.rosa.Anaconda.Addons.PackageRemove service.
+# Runs org_rosa_package_remove/service/__main__.py
+Name=org.rosa.Anaconda.Addons.PackageRemove
+Exec=/usr/libexec/anaconda/start-module org_rosa_package_remove.service
+User=root

@@ -16,20 +16,14 @@
 # Red Hat, Inc.
 #
 
-"""This module contains constants that are used by various parts of the addon."""
+"""The __main__.py file of a service is what runs as the service. See also the files:
+data/*.service
+"""
 
-from dasbus.identifier import DBusServiceIdentifier
-from pyanaconda.core.dbus import DBus
-from pyanaconda.modules.common.constants.namespaces import ADDONS_NAMESPACE
+from pyanaconda.modules.common import init
+init()  # must be called before importing the service code
 
-# These define location of the addon's service on D-Bus. See also the data/*.conf file.
-
-PACKAGE_REMOVE_NAMESPACE = (*ADDONS_NAMESPACE, "PackageRemove")
-
-PACKAGE_REMOVE = DBusServiceIdentifier(
-    namespace=PACKAGE_REMOVE_NAMESPACE,
-    message_bus=DBus
-)
-
-PACKAGES_LIST_FILE_PATH = "/etc/anaconda/removable_pkgs.list"
-REMOVABLE_PACKAGES_FILE_PATH = "etc/anaconda/pkgs_to_remove.list"
+# pylint:disable=wrong-import-position
+from org_rosa_package_remove.service.package_remove import PackageRemove
+service = PackageRemove()
+service.run()

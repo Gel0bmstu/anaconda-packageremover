@@ -41,7 +41,7 @@ from os.path import normpath, join as joinpath
 
 from pyanaconda.modules.common.task import Task
 
-from org_fedora_package_remove.constants import REMOVABLE_PACKAGES_FILE_PATH
+from org_rosa_package_remove.constants import REMOVABLE_PACKAGES_FILE_PATH
 
 log = logging.getLogger(__name__)
 

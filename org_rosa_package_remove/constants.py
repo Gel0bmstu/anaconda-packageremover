@@ -16,14 +16,31 @@
 # Red Hat, Inc.
 #
 
-"""The __main__.py file of a service is what runs as the service. See also the files:
-data/*.service
-"""
+"""This module contains constants that are used by various parts of the addon."""
 
-from pyanaconda.modules.common import init
-init()  # must be called before importing the service code
+from dasbus.identifier import DBusServiceIdentifier
+from pyanaconda.core.dbus import DBus
 
-# pylint:disable=wrong-import-position
-from org_fedora_package_remove.service.package_remove import PackageRemove
-service = PackageRemove()
-service.run()
+# These define location of the addon's service on D-Bus. See also the data/*.conf file.
+
+ROSA_ANACONDA_NAMESPACE = (
+    "org", "rosa", "Anaconda"
+)
+
+ROSA_ADDONS_NAMESPACE = (
+    *ROSA_ANACONDA_NAMESPACE,
+    "Addons"
+)
+
+PACKAGE_REMOVE_NAMESPACE = (
+    *ROSA_ADDONS_NAMESPACE,
+    "PackageRemove"
+)
+
+PACKAGE_REMOVE = DBusServiceIdentifier(
+    namespace=PACKAGE_REMOVE_NAMESPACE,
+    message_bus=DBus
+)
+
+PACKAGES_LIST_FILE_PATH = "/etc/anaconda/removable_pkgs.list"
+REMOVABLE_PACKAGES_FILE_PATH = "etc/anaconda/pkgs_to_remove.list"

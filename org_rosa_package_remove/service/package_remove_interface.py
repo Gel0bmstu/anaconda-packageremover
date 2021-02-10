@@ -23,8 +23,8 @@ from dasbus.typing import *  # pylint: disable=wildcard-import,unused-wildcard-i
 
 from pyanaconda.modules.common.base import KickstartModuleInterface
 
-from org_fedora_package_remove.constants import PACKAGE_REMOVE
-# from org_fedora_package_remove.service.package_remove import PkgsList
+from org_rosa_package_remove.constants import PACKAGE_REMOVE
+# from org_rosa_package_remove.service.package_remove import PkgsList
 
 log = logging.getLogger(__name__)
 

@@ -39,9 +39,9 @@ from pyanaconda.ui.common import FirstbootSpokeMixIn
 # Simpleline's dialog configured for use in Anaconda
 from pyanaconda.ui.tui.tuiobject import Dialog, PasswordDialog
 
-# the path to addons is in sys.path so we can import things from org_fedora_package_remove
-from org_fedora_package_remove.categories.package_remove import PackageRemoveCategory
-from org_fedora_package_remove.constants import PACKAGE_REMOVE, PACKAGES_LIST_FILE_PATH
+# the path to addons is in sys.path so we can import things from org_rosa_package_remove
+from org_rosa_package_remove.categories.package_remove import PackageRemoveCategory
+from org_rosa_package_remove.constants import PACKAGE_REMOVE, PACKAGES_LIST_FILE_PATH
 
 log = logging.getLogger(__name__)
 
