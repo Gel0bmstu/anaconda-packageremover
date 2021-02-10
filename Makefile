@@ -1,23 +1,23 @@
 TMPDIR := $(shell mktemp -d)
 OUTDIR := $(shell pwd)
 
-BASEDIR := $(TMPDIR)/usr/share/anaconda/
-ADDONDIR := $(BASEDIR)/addons/
-SERVICESDIR := $(BASEDIR)/dbus/services/
-CONFDIR := $(BASEDIR)/dbus/confs/
-​ADDON := org_rosa_package_remove
+ANACONDADIR := usr/share/anaconda/
+ANACONDAADDONSDIR := usr/share/anaconda/addons/
+ADDONDIR := org_rosa_package_remove/
+SERVICEDIR = $(ANACONDADIR)/dbus/services/
+CONFDIR = $(ANACONDADIR)/dbus/confs/
 
 PYTHON?=python3
 
 build:
 	@echo "*** Building updates image ***"
 	@echo -n "Working..."
-	@mkdir -p $(ADDONDIR)
-	@cp -par org_rosa_package_remove $(ADDONDIR)
-	@mkdir -p $(SERVICESDIR)
-	@cp -pa data/org.rosa.Anaconda.Addons.*.service $(SERVICESDIR)
-	@mkdir -p $(CONFDIR)
-	@cp -pa data/org.rosa.Anaconda.Addons.*.conf $(CONFDIR)
+	@mkdir -p $(TMPDIR)/$(ANACONDAADDONSDIR)
+	@cp -par org_rosa_package_remove $(TMPDIR)/$(ANACONDAADDONSDIR)
+	@mkdir -p $(TMPDIR)/$(SERVICESDIR)
+	@cp -pa data/org.rosa.Anaconda.Addons.*.service $(TMPDIR)/$(SERVICESDIR)
+	@mkdir -p $(TMPDIR)/$(CONFDIR)
+	@cp -pa data/org.rosa.Anaconda.Addons.*.conf $(TMPDIR)/$(CONFDIR)
 	@cd $(TMPDIR) ; find . | cpio -c -o --quiet | gzip -9 > $(OUTDIR)/updates.img
 	@rm -rf $(TMPDIR)
 	@echo "building done."
@@ -32,8 +32,12 @@ debug: build
 
 .PHONY: install
 install:
-	mkdir -p $(DESTDIR)$(ADDONDIR)
-​    cp -rv $(ADDON) $(DESTDIR)$(ADDONDIR)
+	mkdir -p $(DESTDIR)$(ANACONDAADDONSDIR)
+	mkdir -p $(DESTDIR)$(SERVICEDIR)
+	mkdir -p $(DESTDIR)$(CONFDIR)
+	cp -rv $(ADDONDIR) $(DESTDIR)$(ANACONDAADDONSDIR)
+	install -c -m 644 data/*.service $(DESTDIR)$(SERVICEDIR)
+	install -c -m 644 data/*.conf $(DESTDIR)$(CONFDIR)
 
 .PHONY: check
 check:
