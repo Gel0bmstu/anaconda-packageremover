@@ -5,6 +5,7 @@ BASEDIR := $(TMPDIR)/usr/share/anaconda/
 ADDONDIR := $(BASEDIR)/addons/
 SERVICESDIR := $(BASEDIR)/dbus/services/
 CONFDIR := $(BASEDIR)/dbus/confs/
+​ADDON := org_rosa_package_remove
 
 PYTHON?=python3
 
@@ -28,6 +29,11 @@ _default: build
 .PHONY: debug
 debug: build
 	scp updates.img gel0@35.228.159.44:/home/gel0/addon
+
+.PHONY: install
+install:
+	mkdir -p $(DESTDIR)$(ADDONDIR)
+​    cp -rv $(ADDON) $(DESTDIR)$(ADDONDIR)
 
 .PHONY: check
 check:
