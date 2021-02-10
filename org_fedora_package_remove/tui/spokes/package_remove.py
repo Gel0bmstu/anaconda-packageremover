@@ -28,7 +28,7 @@
 """Module with the class for the Package remove TUI spoke."""
 
 import logging
-import re
+import re, os
 
 from simpleline.render.screen import InputState
 from simpleline.render.containers import ListColumnContainer
@@ -41,7 +41,7 @@ from pyanaconda.ui.tui.tuiobject import Dialog, PasswordDialog
 
 # the path to addons is in sys.path so we can import things from org_fedora_package_remove
 from org_fedora_package_remove.categories.package_remove import PackageRemoveCategory
-from org_fedora_package_remove.constants import PACKAGE_REMOVE
+from org_fedora_package_remove.constants import PACKAGE_REMOVE, PACKAGES_LIST_FILE_PATH
 
 log = logging.getLogger(__name__)
 
@@ -155,6 +155,10 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         :rtype: bool
         """
         return True
+
+    @property
+    def showable(self):
+        return os.path.exists(PACKAGES_LIST_FILE_PATH)
 
     @property
     def status(self):

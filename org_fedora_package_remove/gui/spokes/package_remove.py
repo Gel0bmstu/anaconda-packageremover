@@ -23,6 +23,7 @@
 import logging
 
 import gi
+import os
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Pango
@@ -219,6 +220,10 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
         """
         # this is an optional spoke that is not mandatory to be completed
         return False
+
+    @property
+    def showable(self):
+        return os.path.exists(PACKAGES_LIST_FILE_PATH)
 
     @property
     def status(self):
