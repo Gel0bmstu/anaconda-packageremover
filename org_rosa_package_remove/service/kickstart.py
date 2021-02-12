@@ -27,6 +27,7 @@ from pyanaconda.core.kickstart.addon import AddonData
 
 log = logging.getLogger(__name__)
 
+__all__ = ["PackageRemoveData", "PackageRemoveKickstartSpecification"]
 
 class PackageRemoveData(AddonData):
     """The kickstart data for the Package Remove addon."""

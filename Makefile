@@ -4,7 +4,7 @@ OUTDIR := $(shell pwd)
 ANACONDADIR := usr/share/anaconda/
 ANACONDAADDONSDIR := usr/share/anaconda/addons/
 ADDONDIR := org_rosa_package_remove/
-SERVICEDIR = $(ANACONDADIR)/dbus/services/
+SERVICESDIR = $(ANACONDADIR)/dbus/services/
 CONFDIR = $(ANACONDADIR)/dbus/confs/
 
 PYTHON?=python3
@@ -33,9 +33,9 @@ debug: build
 .PHONY: install
 install:
 	mkdir -p $(DESTDIR)$(ANACONDAADDONSDIR)
-	mkdir -p $(DESTDIR)$(SERVICEDIR)
+	mkdir -p $(DESTDIR)$(SERVICESDIR)
 	mkdir -p $(DESTDIR)$(CONFDIR)
-​    cp -rv $(ADDONDIR) $(DESTDIR)$(ANACONDAADDONSDIR)
+	cp -rv $(ADDONDIR) $(DESTDIR)$(ANACONDAADDONSDIR)
 	install -c -m 644 data/*.service $(DESTDIR)$(SERVICEDIR)
 	install -c -m 644 data/*.conf $(DESTDIR)$(CONFDIR)
 

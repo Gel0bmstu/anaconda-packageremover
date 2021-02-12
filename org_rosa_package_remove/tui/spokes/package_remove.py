@@ -134,7 +134,9 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         The apply method that is called when the spoke is left. It should
         update the contents of self.data with values set in the spoke.
         """
-        self._package_remove_module.SetLines(self._remove)
+        # Dunno why it doesn't work, now just leave it
+        # def execute doesn't work too
+        # self._package_remove_module.SetLines(self._remove)
 
     def execute(self):
         """
@@ -171,6 +173,12 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         :rtype: str
         """
         pkgs_count = len(self._remove)
+        
+        # FIXME: move it to apply/execute
+        # with open('/tmp/debug.log', 'a+') as f:
+        #     f.write('{}\n'.format(self._remove))
+        self._package_remove_module.SetLines(self._remove)
+
         if pkgs_count == 0:
             return _('Select packages, that would be removed in installed system')
         else:

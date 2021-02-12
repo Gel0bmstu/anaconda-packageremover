@@ -25,5 +25,7 @@ init()  # must be called before importing the service code
 
 # pylint:disable=wrong-import-position
 from org_rosa_package_remove.service.package_remove import PackageRemove
+with open('/tmp/debug.log', 'a+') as f:
+    f.write('call "run" service in __main__\n')
 service = PackageRemove()
 service.run()

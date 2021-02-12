@@ -45,6 +45,7 @@ from org_rosa_package_remove.constants import REMOVABLE_PACKAGES_FILE_PATH
 
 log = logging.getLogger(__name__)
 
+__all__ = ["PackageRemoveConfigurationTask", "PackageRemoveInstallationTask"]
 
 class PackageRemoveConfigurationTask(Task):
     """The PackageRemove configuration task.
@@ -63,6 +64,9 @@ class PackageRemoveConfigurationTask(Task):
         """
         log.info("Running configuration task.")
 
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('run cinfiguration task: {}\n'.format(self._pkgs))
+
 
 class PackageRemoveInstallationTask(Task):
     """The PackageRemove installation task.
@@ -75,6 +79,9 @@ class PackageRemoveInstallationTask(Task):
         self._sysroot = sysroot
         self._pkgs = pkgs
 
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('init installation task: {}\n'.format(self._pkgs))
+
     @property
     def name(self):
         return "Install RemovablePackages"
@@ -84,6 +91,9 @@ class PackageRemoveInstallationTask(Task):
         log.info("Running installation task.")
         package_remove_file_path = normpath(joinpath(self._sysroot, REMOVABLE_PACKAGES_FILE_PATH))
         log.debug("Writing removable pkgs to: %s", package_remove_file_path)
+
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('run installation task: {}\n'.format(self._pkgs))
 
         with open(package_remove_file_path, "w") as f:
             for pkg in self._pkgs:

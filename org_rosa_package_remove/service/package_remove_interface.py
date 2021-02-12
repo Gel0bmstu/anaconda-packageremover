@@ -28,6 +28,8 @@ from org_rosa_package_remove.constants import PACKAGE_REMOVE
 
 log = logging.getLogger(__name__)
 
+__all__ = ["PackageRemoveInterface"]
+
 @dbus_interface(PACKAGE_REMOVE.interface_name)
 class PackageRemoveInterface(KickstartModuleInterface):
     """The interface for PackageRemove.

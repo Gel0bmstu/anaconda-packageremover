@@ -43,6 +43,9 @@ class PackageRemove(KickstartService):
         self._remove = []
         self._list = []
 
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('init PackageRemove service: {}\n'.format(self._remove))
+
         self.remove_pkgs_changed = Signal()
 
     def publish(self):
@@ -86,8 +89,7 @@ class PackageRemove(KickstartService):
         Anaconda's code automatically calls the ***_with_tasks methods and
         stores the returned ***Task instances to later execute their run() methods.
         """
-        task = PackageRemoveConfigurationTask()
-        return [task]
+        return [PackageRemoveConfigurationTask()]
 
     def install_with_tasks(self):
         """Return installation tasks.
@@ -97,10 +99,12 @@ class PackageRemove(KickstartService):
         Anaconda's code automatically calls the ***_with_tasks methods and
         stores the returned ***Task instances to later execute their run() methods.
         """
-        task = PackageRemoveInstallationTask(
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('install_with_tasks\n')
+
+        return [PackageRemoveInstallationTask(
             conf.target.system_root,
-            self._remove)
-        return [task]
+            self._remove)]
 
     def _get_packages_list(self):
         pkgs = []

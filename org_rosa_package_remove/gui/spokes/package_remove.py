@@ -144,6 +144,9 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
         self._remove_count = len(pkgs_to_remove)
         self._package_remove_module.SetLines(pkgs_to_remove)
 
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('spoke apply: {}\n'.format(pkgs_to_remove))
+
     def execute(self):
         """
         The execute method that is called when the spoke is left. It is
