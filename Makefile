@@ -3,7 +3,7 @@ OUTDIR := $(shell pwd)
 
 ANACONDADIR := usr/share/anaconda/
 ANACONDAADDONSDIR := usr/share/anaconda/addons/
-ADDONDIR := org_rosa_package_remove/
+ADDONDIR := org_fedoraproject_package_remove/
 SERVICESDIR = $(ANACONDADIR)/dbus/services/
 CONFDIR = $(ANACONDADIR)/dbus/confs/
 
@@ -13,11 +13,11 @@ build:
 	@echo "*** Building updates image ***"
 	@echo -n "Working..."
 	@mkdir -p $(TMPDIR)/$(ANACONDAADDONSDIR)
-	@cp -par org_rosa_package_remove $(TMPDIR)/$(ANACONDAADDONSDIR)
+	@cp -par org_fedoraproject_package_remove $(TMPDIR)/$(ANACONDAADDONSDIR)
 	@mkdir -p $(TMPDIR)/$(SERVICESDIR)
-	@cp -pa data/org.rosa.Anaconda.Addons.*.service $(TMPDIR)/$(SERVICESDIR)
+	@cp -pa data/org.fedoraproject.Anaconda.Addons.*.service $(TMPDIR)/$(SERVICESDIR)
 	@mkdir -p $(TMPDIR)/$(CONFDIR)
-	@cp -pa data/org.rosa.Anaconda.Addons.*.conf $(TMPDIR)/$(CONFDIR)
+	@cp -pa data/org.fedoraproject.Anaconda.Addons.*.conf $(TMPDIR)/$(CONFDIR)
 	@cd $(TMPDIR) ; find . | cpio -c -o --quiet | gzip -9 > $(OUTDIR)/updates.img
 	@rm -rf $(TMPDIR)
 	@echo "building done."
@@ -42,6 +42,6 @@ install:
 .PHONY: check
 check:
 	@echo "*** Running pylint ***"
-	$(PYTHON) -m pylint org_rosa_package_remove/
+	$(PYTHON) -m pylint org_fedoraproject_package_remove/
 # Using git clone of Anaconda will give you import errors. In such case, run the check this way:
 # PYTHONPATH=/my/anaconda/git/clone make check

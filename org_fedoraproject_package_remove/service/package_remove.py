@@ -23,14 +23,15 @@ from pyanaconda.core.signal import Signal
 from pyanaconda.modules.common.base import KickstartService
 from pyanaconda.modules.common.containers import TaskContainer
 
-from org_rosa_package_remove.constants import PACKAGE_REMOVE, PACKAGES_LIST_FILE_PATH
-from org_rosa_package_remove.service.package_remove_interface import PackageRemoveInterface
-from org_rosa_package_remove.service.installation import PackageRemoveConfigurationTask, \
+from org_fedoraproject_package_remove.constants import PACKAGE_REMOVE, PACKAGES_LIST_FILE_PATH
+from org_fedoraproject_package_remove.service.package_remove_interface import PackageRemoveInterface
+from org_fedoraproject_package_remove.service.installation import PackageRemoveConfigurationTask, \
     PackageRemoveInstallationTask
-from org_rosa_package_remove.service.kickstart import PackageRemoveKickstartSpecification
+from org_fedoraproject_package_remove.service.kickstart import PackageRemoveKickstartSpecification
 
 log = logging.getLogger(__name__)
 
+__all__ = ["PackageRemove"]
 
 class PackageRemove(KickstartService):
     """The PackageRemove D-Bus service.
@@ -50,6 +51,12 @@ class PackageRemove(KickstartService):
 
     def publish(self):
         """Publish the module."""
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('Publish PackageRemove module: {}\n{}\n{}\n'.format(
+                PACKAGE_REMOVE.namespace,
+                PACKAGE_REMOVE.object_path,
+                PACKAGE_REMOVE.service_name
+            ))
         TaskContainer.set_namespace(PACKAGE_REMOVE.namespace)
         DBus.publish_object(PACKAGE_REMOVE.object_path, PackageRemoveInterface(self))
         DBus.register_service(PACKAGE_REMOVE.service_name)
@@ -62,14 +69,14 @@ class PackageRemove(KickstartService):
     def process_kickstart(self, data):
         """Process the kickstart data."""
         log.debug("Processing kickstart data...")
-        self._list = data.addons.org_rosa_package_remove.list
-        self._remove = data.addons.org_rosa_package_remove.remove
+        self._list = data.addons.org_fedoraproject_package_remove.list
+        self._remove = data.addons.org_fedoraproject_package_remove.remove
 
     def setup_kickstart(self, data):
         """Set the given kickstart data."""
         log.debug("Generating kickstart data...")
-        data.addons.org_rosa_package_remove.list = self._list
-        data.addons.org_rosa_package_remove.remove = self._remove
+        data.addons.org_fedoraproject_package_remove.list = self._list
+        data.addons.org_fedoraproject_package_remove.remove = self._remove
 
     @property
     def list(self):
@@ -80,31 +87,6 @@ class PackageRemove(KickstartService):
     def set_pkgs_to_remove(self, pkgs):
         self._remove = pkgs
         self.remove_pkgs_changed.emit()
-
-    def configure_with_tasks(self):
-        """Return configuration tasks.
-
-        The configuration tasks are run at the beginning of the installation process.
-
-        Anaconda's code automatically calls the ***_with_tasks methods and
-        stores the returned ***Task instances to later execute their run() methods.
-        """
-        return [PackageRemoveConfigurationTask()]
-
-    def install_with_tasks(self):
-        """Return installation tasks.
-
-        The installation tasks are run at the end of the installation process.
-
-        Anaconda's code automatically calls the ***_with_tasks methods and
-        stores the returned ***Task instances to later execute their run() methods.
-        """
-        with open('/tmp/debug.log', 'a+') as f:
-            f.write('install_with_tasks\n')
-
-        return [PackageRemoveInstallationTask(
-            conf.target.system_root,
-            self._remove)]
 
     def _get_packages_list(self):
         pkgs = []
@@ -121,3 +103,33 @@ class PackageRemove(KickstartService):
                 return
 
         log.debug('Packages list from {} getted succeessfully.'.format(PACKAGES_LIST_FILE_PATH))
+
+    def configure_with_tasks(self):
+        """Return configuration tasks.
+
+        The configuration tasks are run at the beginning of the installation process.
+
+        Anaconda's code automatically calls the ***_with_tasks methods and
+        stores the returned ***Task instances to later execute their run() methods.
+        """
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('configure_with_tasks\n')
+
+        return [PackageRemoveConfigurationTask()]
+
+    def install_with_tasks(self):
+        """Return installation tasks.
+
+        The installation tasks are run at the end of the installation process.
+
+        Anaconda's code automatically calls the ***_with_tasks methods and
+        stores the returned ***Task instances to later execute their run() methods.
+        """
+        with open('/tmp/debug.log', 'a+') as f:
+            f.write('install_with_tasks\n')
+
+        return [
+            PackageRemoveInstallationTask(
+                sysroot=conf.target.system_root,
+                pkgs=self._remove)
+        ] 

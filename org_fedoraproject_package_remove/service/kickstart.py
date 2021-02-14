@@ -45,7 +45,7 @@ class PackageRemoveData(AddonData):
         args is a list of all the arguments following the addon ID. For
         example, for the line:
 
-            %addon org_rosa_package_remove --reverse --arg2="example"
+            %addon org_fedoraproject_package_remove --reverse --arg2="example"
 
         handle_header will be called with args=['--reverse', '--arg2="example"']
 
@@ -56,7 +56,7 @@ class PackageRemoveData(AddonData):
         """
         # Create the argument parser.
         op = KSOptionParser(
-            prog="%addon org_rosa_package_remove",
+            prog="%addon org_fedoraproject_package_remove",
             version=VERSION,
             description="Configure the Package Remove Addon."
         )
@@ -82,7 +82,7 @@ class PackageRemoveData(AddonData):
 
         For example, this kickstart...
 
-        %addon org_rosa_package_remove
+        %addon org_fedoraproject_package_remove
         Package remove!
         foo bar baz
         %end
@@ -102,7 +102,7 @@ class PackageRemoveData(AddonData):
         """What should end up in the resulting kickstart file, i.e. the %addon
         section containing string representation of the stored data.
         """
-        section = "\n%addon org_rosa_package_remove"
+        section = "\n%addon org_fedoraproject_package_remove"
 
         if self.reverse:
             section += " --reverse"
@@ -124,5 +124,5 @@ class PackageRemoveKickstartSpecification(KickstartSpecification):
     version = VERSION
 
     addons = {
-        "org_rosa_package_remove": PackageRemoveData
+        "org_fedoraproject_package_remove": PackageRemoveData
     }

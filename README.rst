@@ -36,7 +36,7 @@ of Anaconda's code. ::
     ├── LICENSE
     ├── Makefile
     ├── README.rst
-    └── org_rosa_package_remove  <2>
+    └── org_fedoraproject_package_remove  <2>
         ├── constants.py        <3>
         ├── service             <4>
         ├── categories          <5>
@@ -62,10 +62,10 @@ Service files
 The files in the ``data`` directory are needed to configure and run the D-Bus service in the
 installation environment. These are:
 
-``org.rosa.Anaconda.Addons.PackageRemove.conf``
+``org.fedoraproject.Anaconda.Addons.PackageRemove.conf``
     Configuration for D-Bus that describes the objects on the bus and access rights to these.
 
-``org.rosa.Anaconda.Addons.PackageRemove.service``
+``org.fedoraproject.Anaconda.Addons.PackageRemove.service``
     A D-Bus service file that describes the D-Bus service to be started. Note that even though
     these files have the same ``.service`` extension as ``systemd`` unit files and use a similar
     format, they are different and are not parsed by ``systemd`` but rather the D-Bus daemon.
@@ -97,13 +97,13 @@ Addon code directory
 
 All Python code of the addon should be placed in an ``<addon_name>`` directory. Anaconda addons
 generally use for this directory a naming scheme that concatenates hierarchically nested
-identifiers into an URL-like string. You can read ``org_rosa_package_remove`` as the three
+identifiers into an URL-like string. You can read ``org_fedoraproject_package_remove`` as the three
 components: ``org``, ``rosa``, and ``package_remove``. You should create your own namespace for
 your addon, eg. ``com_example_widgets``.
 
 In the Python code, the name of this directory corresponds to where your modules are located:
 
->>> from org_rosa_package_remove.foo.bar import baz
+>>> from org_fedoraproject_package_remove.foo.bar import baz
 
 In this example addon, this directory contains a single file:
 
@@ -151,7 +151,7 @@ Interface code
 The code for the addon's user interfaces (integrated into Anaconda's user interfaces) follows
 a rigid structure: ::
 
-    org_rosa_package_remove/
+    org_fedoraproject_package_remove/
     ├── categories
     │   └── package_remove.py
     ├── gui

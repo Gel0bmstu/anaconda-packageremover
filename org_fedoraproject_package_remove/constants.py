@@ -20,22 +20,25 @@
 
 from dasbus.identifier import DBusServiceIdentifier
 from pyanaconda.core.dbus import DBus
+from pyanaconda.modules.common.constants.namespaces import ADDONS_NAMESPACE
 
 # These define location of the addon's service on D-Bus. See also the data/*.conf file.
 
-ROSA_ANACONDA_NAMESPACE = (
-    "org", "rosa", "Anaconda"
-)
+PACKAGE_REMOVE_NAMESPACE = (*ADDONS_NAMESPACE, "PackageRemove")
 
-ROSA_ADDONS_NAMESPACE = (
-    *ROSA_ANACONDA_NAMESPACE,
-    "Addons"
-)
+# ROSA_ANACONDA_NAMESPACE = (
+#     "org", "rosa", "Anaconda"
+# )
 
-PACKAGE_REMOVE_NAMESPACE = (
-    *ROSA_ADDONS_NAMESPACE,
-    "PackageRemove"
-)
+# ROSA_ADDONS_NAMESPACE = (
+#     *ROSA_ANACONDA_NAMESPACE,
+#     "Addons"
+# )
+
+# PACKAGE_REMOVE_NAMESPACE = (
+#     *ROSA_ADDONS_NAMESPACE,
+#     "PackageRemove"
+# )
 
 PACKAGE_REMOVE = DBusServiceIdentifier(
     namespace=PACKAGE_REMOVE_NAMESPACE,
@@ -43,4 +46,4 @@ PACKAGE_REMOVE = DBusServiceIdentifier(
 )
 
 PACKAGES_LIST_FILE_PATH = "/etc/anaconda/removable_pkgs.list"
-REMOVABLE_PACKAGES_FILE_PATH = "etc/anaconda/pkgs_to_remove.list"
+REMOVABLE_PACKAGES_FILE_PATH = "tmp/pkgs_to_remove.list"
