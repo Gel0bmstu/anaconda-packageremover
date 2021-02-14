@@ -36,7 +36,7 @@ install:
 	mkdir -p $(DESTDIR)$(SERVICESDIR)
 	mkdir -p $(DESTDIR)$(CONFDIR)
 	cp -rv $(ADDONDIR) $(DESTDIR)$(ANACONDAADDONSDIR)
-	install -c -m 644 data/*.service $(DESTDIR)$(SERVICEDIR)
+	install -c -m 644 data/*.service $(DESTDIR)$(SERVICESDIR)
 	install -c -m 644 data/*.conf $(DESTDIR)$(CONFDIR)
 
 .PHONY: check
