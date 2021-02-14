@@ -46,4 +46,4 @@ PACKAGE_REMOVE = DBusServiceIdentifier(
 )
 
 PACKAGES_LIST_FILE_PATH = "/etc/anaconda/removable_pkgs.list"
-REMOVABLE_PACKAGES_FILE_PATH = "tmp/pkgs_to_remove.list"
+REMOVABLE_PACKAGES_FILE_PATH = "etc/anaconda/pkgs_to_remove.list"
