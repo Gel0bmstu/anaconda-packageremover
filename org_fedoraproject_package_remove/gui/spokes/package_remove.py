@@ -24,6 +24,7 @@ import logging
 
 import gi
 import os
+import re
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Pango
@@ -114,6 +115,8 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
         """
         NormalSpoke.initialize(self)
         self._entry = self.builder.get_object("textLines")
+        self._print_packages(self._package_remove_module.Lines)
+        self.apply()
 
     def refresh(self):
         """
@@ -123,7 +126,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
 
         :see: pyanaconda.ui.common.UIObject.refresh
         """
-        self._print_packages(self._package_remove_module.Lines)
+        # self._print_packages(self._package_remove_module.Lines)
 
     def apply(self):
         """
@@ -172,19 +175,23 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
 
             label = Gtk.Label(valign=Gtk.Align.FILL)
             label.set_use_markup(True)
-            label.set_markup('<big>{}</big>'.format(name))
             label.set_selectable(False)
             label.set_line_wrap(True)
             label.set_hexpand(True)
             label.set_vexpand(True)
             label.set_justify(Gtk.Justification.LEFT)
-            # label.set_valign(Gtk.Align.FILL)
             label.set_halign(Gtk.Align.START)
             label.props.margin_left = 10
 
             checkbox = Gtk.CheckButton()
             checkbox.props.margin_right = 20
             checkbox.props.valign = Gtk.Align.CENTER
+
+            if name.startswith('+'):
+                name = re.sub(r'^\+\ *', '', name)
+                checkbox.set_active(True)
+
+            label.set_markup('<big>{}</big>'.format(name))
 
             grd.attach(label, 0, 0, 1, 1)
             grd.attach(checkbox, 1, 0, 1, 1)

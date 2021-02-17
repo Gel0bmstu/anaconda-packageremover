@@ -90,7 +90,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
 
         self._package_remove_module = PACKAGE_REMOVE.get_proxy()
 
-        self._remove = []
+        self._remove = {}
         self._list = []
 
     def initialize(self):
@@ -102,6 +102,18 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         :see: pyanaconda.ui.common.UIObject.initialize
         """
         NormalTUISpoke.initialize(self)
+
+        pkgs_list = self._package_remove_module.Lines
+
+        for pkg in pkgs_list:
+            if pkg.startswith('+'):
+                pkg = re.sub(r'^\+\ *', '', pkg)
+                self._remove[pkg] = True 
+            else:
+                self._remove[pkg] = False
+
+        self.apply()      
+
 
     def refresh(self, args=None):
         """
@@ -118,13 +130,11 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         # call parent method to setup basic container with screen title set
         super().refresh(args)
 
-        pkgs_list = self._package_remove_module.Lines
-
         self._container = ListColumnContainer(columns=3)
         self.window.add(self._container)
 
-        for pkg in pkgs_list:
-            c = CheckboxWidget(title=pkg, completed=(pkg in self._remove))
+        for pkg in self._remove:
+            c = CheckboxWidget(title=pkg, completed=(self._remove.get(pkg)))
             self._container.add(c, self._checkbox_called, pkg)
 
         self._window.add_separator()
@@ -172,12 +182,12 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
 
         :rtype: str
         """
-        pkgs_count = len(self._remove)
+        pkgs_count = len([pkg for pkg in self._remove if self._remove.get(pkg)])
         
         # FIXME: move it to apply/execute
         # with open('/tmp/debug.log', 'a+') as f:
         #     f.write('{}\n'.format(self._remove))
-        self._package_remove_module.SetLines(self._remove)
+        self._package_remove_module.SetLines([pkg for pkg in self._remove if self._remove.get(pkg)])
 
         if pkgs_count == 0:
             return _('Select packages, that would be removed in installed system')
@@ -204,7 +214,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
             return super().input(args=args, key=key)
 
     def _checkbox_called(self, data):
-        if data in self._remove:
-            self._remove.remove(data)
+        if self._remove.get(data):
+            self._remove[data] = False
         else:
-            self._remove.append(data)
+            self._remove[data] = True
