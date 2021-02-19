@@ -1,6 +1,7 @@
 TMPDIR := $(shell mktemp -d)
 OUTDIR := $(shell pwd)
 
+LOCALEDIR := usr/share/locale
 ANACONDADIR := usr/share/anaconda/
 ANACONDAADDONSDIR := usr/share/anaconda/addons/
 ADDONDIR := org_fedoraproject_package_remove/
@@ -18,6 +19,8 @@ build:
 	@cp -pa data/org.fedoraproject.Anaconda.Addons.*.service $(TMPDIR)/$(SERVICESDIR)
 	@mkdir -p $(TMPDIR)/$(CONFDIR)
 	@cp -pa data/org.fedoraproject.Anaconda.Addons.*.conf $(TMPDIR)/$(CONFDIR)
+	@mkdir -p $(TMPDIR)/$(LOCALEDIR)
+	make -C ./po install DESTDIR=$(TMPDIR)
 	@cd $(TMPDIR) ; find . | cpio -c -o --quiet | gzip -9 > $(OUTDIR)/updates.img
 	@rm -rf $(TMPDIR)
 	@echo "building done."
@@ -38,6 +41,7 @@ install:
 	cp -rv $(ADDONDIR) $(DESTDIR)$(ANACONDAADDONSDIR)
 	install -c -m 644 data/*.service $(DESTDIR)$(SERVICESDIR)
 	install -c -m 644 data/*.conf $(DESTDIR)$(CONFDIR)
+	make -C ./po install DESTDIR=$(DESTDIR)
 
 .PHONY: check
 check:

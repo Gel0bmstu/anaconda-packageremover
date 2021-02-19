@@ -86,7 +86,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         :type payload: pyanaconda.packaging.Payload
         """
         NormalTUISpoke.__init__(self, data, storage, payload)
-        self.title = N_("Package to remove")
+        self.title = N_("Package remove")
 
         self._package_remove_module = PACKAGE_REMOVE.get_proxy()
 

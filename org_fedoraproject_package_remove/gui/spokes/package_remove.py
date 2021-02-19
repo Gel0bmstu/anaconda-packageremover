@@ -85,7 +85,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
     icon = "view-list-symbolic"
 
     # title of the spoke (will be displayed on the hub)
-    title = N_("_Package to remove")
+    title = N_("_Package remove")
 
     ### methods defined by API ###
     def __init__(self, data, storage, payload):
