@@ -34,4 +34,4 @@ class PackageRemoveCategory(SpokeCategory):
     Spokes reference a class of the category they should be included in.
     """
 
-    title = N_("PACKAGE REMOVE")
+    title = N_('УДАЛЕНИЕ ПАКЕТОВ')

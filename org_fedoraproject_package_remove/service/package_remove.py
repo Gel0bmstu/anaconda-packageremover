@@ -44,19 +44,10 @@ class PackageRemove(KickstartService):
         self._remove = []
         self._list = []
 
-        with open('/tmp/debug.log', 'a+') as f:
-            f.write('init PackageRemove service: {}\n'.format(self._remove))
-
         self.remove_pkgs_changed = Signal()
 
     def publish(self):
         """Publish the module."""
-        with open('/tmp/debug.log', 'a+') as f:
-            f.write('Publish PackageRemove module: {}\n{}\n{}\n'.format(
-                PACKAGE_REMOVE.namespace,
-                PACKAGE_REMOVE.object_path,
-                PACKAGE_REMOVE.service_name
-            ))
         TaskContainer.set_namespace(PACKAGE_REMOVE.namespace)
         DBus.publish_object(PACKAGE_REMOVE.object_path, PackageRemoveInterface(self))
         DBus.register_service(PACKAGE_REMOVE.service_name)
@@ -68,13 +59,13 @@ class PackageRemove(KickstartService):
 
     def process_kickstart(self, data):
         """Process the kickstart data."""
-        log.debug("Processing kickstart data...")
+        log.debug('Processing kickstart data...')
         self._list = data.addons.org_fedoraproject_package_remove.list
         self._remove = data.addons.org_fedoraproject_package_remove.remove
 
     def setup_kickstart(self, data):
         """Set the given kickstart data."""
-        log.debug("Generating kickstart data...")
+        log.debug('Generating kickstart data...')
         data.addons.org_fedoraproject_package_remove.list = self._list
         data.addons.org_fedoraproject_package_remove.remove = self._remove
 
@@ -112,8 +103,6 @@ class PackageRemove(KickstartService):
         Anaconda's code automatically calls the ***_with_tasks methods and
         stores the returned ***Task instances to later execute their run() methods.
         """
-        with open('/tmp/debug.log', 'a+') as f:
-            f.write('configure_with_tasks\n')
 
         return [PackageRemoveConfigurationTask()]
 
@@ -125,8 +114,6 @@ class PackageRemove(KickstartService):
         Anaconda's code automatically calls the ***_with_tasks methods and
         stores the returned ***Task instances to later execute their run() methods.
         """
-        with open('/tmp/debug.log', 'a+') as f:
-            f.write('install_with_tasks\n')
 
         return [
             PackageRemoveInstallationTask(

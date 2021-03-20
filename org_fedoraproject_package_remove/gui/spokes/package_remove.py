@@ -43,7 +43,7 @@ log = logging.getLogger(__name__)
 __all__ = ["PackageRemoveSpoke"]
 
 # import gettext
-# _ = lambda x: gettext.ldgettext("package-remove-anaconda-plugin", x)
+# _ = lambda x: gettext.ldgettext('package-remove-anaconda-plugin", x)
 
 # will never be translated
 _ = lambda x: x
@@ -85,7 +85,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
     icon = "view-list-symbolic"
 
     # title of the spoke (will be displayed on the hub)
-    title = N_("_Package remove")
+    title = N_('_Удаление пакетов')
 
     ### methods defined by API ###
     def __init__(self, data, storage, payload):
@@ -114,7 +114,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
         :see: pyanaconda.ui.common.UIObject.initialize
         """
         NormalSpoke.initialize(self)
-        self._entry = self.builder.get_object("textLines")
+        self._entry = self.builder.get_object('textLines')
         self._print_packages(self._package_remove_module.Lines)
         self.apply()
 
@@ -146,9 +146,6 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
 
         self._remove_count = len(pkgs_to_remove)
         self._package_remove_module.SetLines(pkgs_to_remove)
-
-        with open('/tmp/debug.log', 'a+') as f:
-            f.write('spoke apply: {}\n'.format(pkgs_to_remove))
 
     def execute(self):
         """
@@ -246,6 +243,6 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalSpoke):
         :rtype: str
         """
         if self._remove_count == 0:
-            return _('Select packages, that would be removed in installed system')
+            return _('Выберете пакеты, которые будут удалены в установленной системе')
         else:
-            return _('You selected {} packages'.format(self._remove_count))
+            return _('Вы выбрали {} пакетов'.format(self._remove_count))

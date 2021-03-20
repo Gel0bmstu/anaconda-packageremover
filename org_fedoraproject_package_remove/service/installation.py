@@ -62,7 +62,7 @@ class PackageRemoveConfigurationTask(Task):
 
         No actions happen in this addon.
         """
-        log.info("Running configuration task.")
+        log.info('Running configuration task.')
 
 
 class PackageRemoveInstallationTask(Task):
@@ -83,9 +83,6 @@ class PackageRemoveInstallationTask(Task):
     def run(self):
         """The run method performs the actual work."""
         package_remove_file_path = normpath(joinpath(self._sysroot, REMOVABLE_PACKAGES_FILE_PATH))
-
-        with open('/tmp/debug.log', 'a+') as f:
-            f.write('pkgs in installation task: {}\n'.format(self._pkgs))
 
         with open(package_remove_file_path, "w") as f:
             for pkg in self._pkgs:

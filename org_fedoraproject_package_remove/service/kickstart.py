@@ -112,7 +112,7 @@ class PackageRemoveData(AddonData):
         for line in self.lines:
             section += line
 
-        if not section.endswith("\n"):
+        if not section.endswith('\n'):
             section += "\n"
 
         section += "%end\n"

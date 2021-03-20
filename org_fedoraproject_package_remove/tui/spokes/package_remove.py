@@ -49,7 +49,7 @@ log = logging.getLogger(__name__)
 __all__ = ["PackageRemoveSpoke"]
 
 # import gettext
-# _ = lambda x: gettext.ldgettext("package-remove-anaconda-plugin", x)
+# _ = lambda x: gettext.ldgettext('package-remove-anaconda-plugin", x)
 
 # will never be translated
 _ = lambda x: x
@@ -86,7 +86,7 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         :type payload: pyanaconda.packaging.Payload
         """
         NormalTUISpoke.__init__(self, data, storage, payload)
-        self.title = N_("Package remove")
+        self.title = N_('Удаление пакетов')
 
         self._package_remove_module = PACKAGE_REMOVE.get_proxy()
 
@@ -185,14 +185,12 @@ class PackageRemoveSpoke(FirstbootSpokeMixIn, NormalTUISpoke):
         pkgs_count = len([pkg for pkg in self._remove if self._remove.get(pkg)])
         
         # FIXME: move it to apply/execute
-        # with open('/tmp/debug.log', 'a+') as f:
-        #     f.write('{}\n'.format(self._remove))
         self._package_remove_module.SetLines([pkg for pkg in self._remove if self._remove.get(pkg)])
 
         if pkgs_count == 0:
-            return _('Select packages, that would be removed in installed system')
+            return _('Выберете пакеты, которые будут удалены в установленной системе')
         else:
-            return _('You selected {} packages'.format(pkgs_count))
+            return _('Вы выбрали {} пакетов'.format(pkgs_count))
 
     def input(self, args, key):
         """

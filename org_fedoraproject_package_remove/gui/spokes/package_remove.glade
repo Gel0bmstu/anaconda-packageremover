@@ -12,7 +12,7 @@
     <property name="can_focus">False</property>
     <property name="hexpand">True</property>
     <property name="vexpand">True</property>
-    <property name="window_name" translatable="yes">PACKETS CHOSE</property>
+    <property name="window_name" translatable="yes">ВЫБОР ПАКЕТОВ</property>
     <signal name="button-clicked" handler="on_back_clicked" swapped="no"/>
     <child internal-child="main_box">
       <object class="GtkBox" id="AnacondaSpokeWindow-main_box1">
@@ -63,7 +63,7 @@
                         <property name="valign">start</property>
                         <property name="margin_right">5</property>
                         <property name="margin_bottom">5</property>
-                        <property name="label" translatable="yes">Packet chose</property>
+                        <property name="label" translatable="yes">Выбор пакетов</property>
                         <attributes>
                           <attribute name="font-desc" value="Cantarell Bold 12"/>
                           <attribute name="weight" value="bold"/>
@@ -84,7 +84,7 @@
                         <property name="valign">start</property>
                         <property name="margin_right">5</property>
                         <property name="margin_bottom">5</property>
-                        <property name="label" translatable="yes">Chose packets, that will be removed from installed system</property>
+                        <property name="label" translatable="yes">Выберете пакеты, которые будут удалены в установленной системе</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

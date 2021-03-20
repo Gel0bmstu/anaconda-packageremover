@@ -41,7 +41,6 @@ install:
 	cp -rv $(ADDONDIR) $(DESTDIR)$(ANACONDAADDONSDIR)
 	install -c -m 644 data/*.service $(DESTDIR)$(SERVICESDIR)
 	install -c -m 644 data/*.conf $(DESTDIR)$(CONFDIR)
-	make -C ./po install DESTDIR=$(DESTDIR)
 
 .PHONY: check
 check:
